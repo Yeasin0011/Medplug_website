@@ -6,12 +6,21 @@ import dotenv from 'dotenv';
 
 import morgan from 'morgan';
 
+import connectDB from './config/db.js';
 
-// configuring env 
+// configuring env
 dotenv.config();
+
+// database config
+connectDB();
 
 // rest objects
 const app = express();
+
+// middlewares
+app.use(express.json())
+
+app.use(morgan('dev'))
 
 // rest api
 app.get('/', (req, res) => {
