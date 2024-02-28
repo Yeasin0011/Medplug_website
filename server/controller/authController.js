@@ -10,20 +10,21 @@ export const registerController = async (req, res) => {
         const {name, email, password, phone, address} = req.body
         // Valdition
         if(!name){
-            return res.send({error:"Name is reqruied"})}
+            return res.send({message:"Name is reqruied"})}
         if(!email){
-            return res.send({error:"Email is reqruied"})}    
+            return res.send({message:"Email is reqruied"})}    
         if(!password){
-            return res.send({error:"Password is reqruied"})}            
+            return res.send({message:"Password is reqruied"})}            
         if(!phone){
-            return res.send({error:"Phone is reqruied"})}
+            return res.send({message:"Phone is reqruied"})}
         if(!address){
-            return res.send({error:"Address is reqruied"})}
+            return res.send({message:"Address is reqruied"})}
         // check for existing user
         const existingUser = await userModel.findOne({email})
         // existing user
         if (existingUser){
             return res.status(200).send({
+                success:false,
                 message:'Already Registered please proceed to login',
             })
         }

@@ -28,7 +28,7 @@ const Contact = () => {
             <BiSupport /> : 000000000000000
           </p>
         </div>
-      </div>
+      </div> 
     </Layout>
   );
 };
