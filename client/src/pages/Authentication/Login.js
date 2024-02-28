@@ -8,12 +8,17 @@ import { toast } from "react-hot-toast";
 
 import {useNavigate} from 'react-router-dom';
 
+import { useAuth } from '../../context/auth';
+
+
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [auth, setAuth] = useAuth();
     const navigate = useNavigate();
 
-    // Form function 
+
+// Form function 
 const handleSubmit = async (e)=>{
     e.preventDefault()
     try{ 
@@ -21,6 +26,12 @@ const handleSubmit = async (e)=>{
         {email, password, })
     if(res && res.data.success){
         toast.success(res.data && res.data.message);
+        setAuth({
+            ...auth,
+            user: res.data.user,
+            token: res.data.token,
+        });
+        localStorage.setItem('auth', JSON.stringify(res.data));
         navigate("/");
     }else{
         toast.error(res.data.message)
@@ -32,7 +43,7 @@ const handleSubmit = async (e)=>{
 }
 
   return (
-    <Layout title={"User Registration Page"}>
+    <Layout title={"Login"}>
     <div className='register'>
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
