@@ -63,7 +63,7 @@ export const loginController = async (req, res) => {
         if(!user){
             return res.status(404).send({
                 success:false,
-                message:"Email is not rergistered please Signup"
+                message:"Email is not rergistered, please Signup"
             })
         }
         const match = await comparePassword(password, user.password);
@@ -97,12 +97,12 @@ export const loginController = async (req, res) => {
     }
 };
 
-//test controller
-// export const testController = (req, res) => {
-//     try {
-//       res.send("Protected Routes");
-//     } catch (error) {
-//       console.log(error);
-//       res.send({ error });
-//     }
-// };
+// test controller
+export const testController = (req, res) => {
+    try {
+      res.send("Protected Routes");
+    } catch (error) {
+      console.log(error);
+      res.send({ error });
+    }
+};

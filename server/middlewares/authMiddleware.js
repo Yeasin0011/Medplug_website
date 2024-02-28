@@ -1,4 +1,5 @@
 import JWT from "jsonwebtoken";
+
 import userModel from "../models/userModel.js";
 
 // Routes Proection with Token
