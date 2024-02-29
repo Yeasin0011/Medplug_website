@@ -38,29 +38,29 @@ const handleSubmit = async (e)=>{
     <Layout title='Forgot Password'>
         <div className='Forgot Password'>
             <h1>Reset Password</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
-                    <input type="email" value={email} onChange={(e)=> setEmail(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required />
-                    <div id="emailHelp" className="form-text">Please use a valid email</div>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputEmail1" className="form-label">Recovery Keyword.</label>
-                    <input type="text" value={answer} onChange={(e)=> setAnswer(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required />
-                    <div id="emailHelp" className="form-text">Insert a private key for resetting password if needed </div>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="exampleInputPassword1" className="form-label">New Password</label>
-                    <input type="password" value={newPassword} onChange={(e)=> setNewPassword(e.target.value)} className="form-control" id="exampleInputPassword1" required/>
-                    <div id="emailHelp" className="form-text">Use a strong password for privacy</div>
-                </div>               
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
+                            <input type="email" value={email} onChange={(e)=> setEmail(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required />
+                            <div id="emailHelp" className="form-text">Please use a valid email</div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">Recovery Keyword.</label>
+                            <input type="text" value={answer} onChange={(e)=> setAnswer(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required />
+                            <div id="emailHelp" className="form-text">Insert a private key for resetting password if needed </div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputPassword1" className="form-label">New Password</label>
+                            <input type="password" value={newPassword} onChange={(e)=> setNewPassword(e.target.value)} className="form-control" id="exampleInputPassword1" required/>
+                            <div id="emailHelp" className="form-text">Use a strong password for privacy</div>
+                        </div>               
 
 
-                <button type="submit" className="btn btn-primary">Reset Password</button>
-                </div>
+                        <button type="submit" className="btn btn-primary">Reset Password</button>
+                    </div>
 
-            </form>
+                </form>
         </div>
     </Layout>
   );
