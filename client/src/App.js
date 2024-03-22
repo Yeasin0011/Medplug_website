@@ -39,8 +39,11 @@ import Products from "./pages/Admin/Products.js";
 import UpdateProduct from "./pages/Admin/UpdateProduct.js";
 
 import Search from "./pages/Search.js";
+
 import ProductDetails from "./pages/ProductDetails.js";
+
 import Categories from "./pages/Categories.js";
+
 import CategoryProduct from "./pages/CategoryProduct.js";
 
 
