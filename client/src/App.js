@@ -33,6 +33,8 @@ import UsersView from "./pages/Admin/UsersView";
 import Orders from "./pages/User/Orders.js";
 
 import Profile from "./pages/User/Profile.js";
+import Products from "./pages/Admin/Products.js";
+import UpdateProduct from "./pages/Admin/UpdateProduct.js";
 
 
 
@@ -53,6 +55,8 @@ function App() {
         <Route path="admin" element = {<AdminDashboard/>}/>
         <Route path="admin/create-category" element = {<CreateCategory/>}/>
         <Route path="admin/create-product" element = {<CreateProduct/>}/>
+        <Route path="admin/product/:slug" element = {<UpdateProduct/>}/>
+        <Route path="admin/products" element = {<Products/>}/>
         <Route path="admin/users" element = {<UsersView/>}/>
       </Route>
       <Route path="/register" element={<Register/>}/>
