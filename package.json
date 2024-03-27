@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "ant": "^0.2.0",
+    "antd": "^5.15.4",
+    "d": "^1.0.2",
+    "express-formidable": "^1.2.0"
+  }
+}
