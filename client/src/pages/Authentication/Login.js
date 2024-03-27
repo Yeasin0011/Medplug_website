@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import {useNavigate, useLocation} from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import { GoogleAuthProvider, signInWithPopup, getAuth} from 'firebase/auth';
+import app from '../../firebase/FirebaseConfig';
  
 
 
@@ -47,7 +48,7 @@ const handleSubmit = async (e)=>{
 
 const  handleGoogle = async (e) => {
     const provider = await new GoogleAuthProvider(); 
-    const auth = getAuth()
+    const auth = getAuth(app)
     return signInWithPopup(auth, provider)
 }
 
@@ -66,9 +67,9 @@ const  handleGoogle = async (e) => {
                 <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" required/>
             </div>
             <div className='mb-3'>
-            <button type="submit" className="btn btn-primary" onClick={() => {navigate('/forgot-password')}}>Forgot Password</button>
-            </div>
             <button type="submit" className="btn btn-primary">Login</button>
+            </div>
+            <button type="submit" className="btn btn-primary" onClick={() => {navigate('/forgot-password')}}>Forgot Password</button>
             <div/>
             <div className='pt-34 w-full flex'>
                 <button onClick={handleGoogle} className='btn btn-success'>
