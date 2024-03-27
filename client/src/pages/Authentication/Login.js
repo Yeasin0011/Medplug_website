@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-
 import Layout from '../../components/Layout/Layout';
-
 import axios from "axios";
-
 import { toast } from "react-hot-toast";
-
 import {useNavigate, useLocation} from 'react-router-dom';
-
 import { useAuth } from '../../context/auth';
+import { GoogleAuthProvider, signInWithPopup, getAuth} from 'firebase/auth';
+ 
+
+
+
 
 
 const Login = () => {
@@ -17,7 +17,6 @@ const Login = () => {
     const [auth, setAuth] = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-
 
 // Form function 
 const handleSubmit = async (e)=>{
@@ -43,6 +42,15 @@ const handleSubmit = async (e)=>{
     }
 }
 
+
+// Google Authenticator
+
+const  handleGoogle = async (e) => {
+    const provider = await new GoogleAuthProvider(); 
+    const auth = getAuth()
+    return signInWithPopup(auth, provider)
+}
+
   return (
     <Layout title={"Login"}>
     <div className='register'>
@@ -61,6 +69,12 @@ const handleSubmit = async (e)=>{
             <button type="submit" className="btn btn-primary" onClick={() => {navigate('/forgot-password')}}>Forgot Password</button>
             </div>
             <button type="submit" className="btn btn-primary">Login</button>
+            <div/>
+            <div className='pt-34 w-full flex'>
+                <button onClick={handleGoogle} className='btn btn-success'>
+                    Login with Google 
+                </button>
+            </div>
             </div>
         </form>
     </div>
