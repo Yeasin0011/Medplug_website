@@ -144,6 +144,23 @@ export const forgotPasswordController = async(req, res) =>{
     }
 }
 
+
+
+//orders
+export const getOrdersController = async (req, res) => {
+    try {
+        const orders = await orderModel.find({buyer:req.user.__id}).populate('products', '-photo').populate("buyer","name")
+        res.json(orders);
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message:'Error while getting orders'
+            error
+        })
+    }
+}
+
 // test controller
 export const testController = (req, res) => {
     try {
