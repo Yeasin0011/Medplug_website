@@ -20,7 +20,7 @@ const Dashboard = () => {
                 <div className='card w-70 p-3'>
                     <h3>Hello, {auth?.user?.name}!</h3>
                     <h7>Mail: {auth?.user?.email}</h7>
-                    <h7>Phone: {auth?.user?.address}</h7>
+                    <h7>Phone: {auth?.user?.phone}</h7>
                 </div>
                 </div>
             </div>
