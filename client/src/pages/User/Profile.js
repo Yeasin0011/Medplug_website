@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Layout from '../../components/Layout/Layout';
 
@@ -43,7 +43,7 @@ const Profile = () => {
             ls = JSON.parse(ls)
             ls.user= data.updatedUser;
             localStorage.setItem("auth", JSON.stringify(ls));
-            toast.sucesss("Profile Updated Sucessfully");
+            toast.success("Profile Updated Sucessfully");
           }
       } catch(error){
           console.log(error)
