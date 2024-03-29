@@ -48,6 +48,8 @@ import CategoryProduct from "./pages/CategoryProduct.js";
 
 import CartPage from "./pages/CartPage";
 
+import AdminOrders from "./pages/Admin/AdminOrders.js";
+
 
 
 
@@ -77,6 +79,7 @@ function App() {
         <Route path="admin/product/:slug" element = {<UpdateProduct/>}/>
         <Route path="admin/products" element = {<Products/>}/>
         <Route path="admin/users" element = {<UsersView/>}/>
+        <Route path="admin/orders" element = {<AdminOrders/>}/>
       </Route>
       <Route path="/register" element={<Register/>}/>
       <Route path="/forgot-password" element={<ForgotPassword/>}/>

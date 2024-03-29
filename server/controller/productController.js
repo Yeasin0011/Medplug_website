@@ -3,7 +3,7 @@ import categoryModel from "../models/categoryModels.js";
 import fs from "fs";
 import slugify from "slugify";
 import braintree from "braintree";
-import orderModel from "../models/categoryModels.js";
+import orderModel from "../models/orderModel.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -355,7 +355,7 @@ export const braintreePaymentController= async (req,res) => {
         amount: total,
         paymentMethodNonce: nonce,
         options:{
-          submitForSettlement:True
+          submitForSettlement:true
         },
     },
     function(error,result){
