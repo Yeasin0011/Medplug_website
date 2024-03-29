@@ -40,10 +40,7 @@ router.get("/all-orders", requireSignIn, isAdmin, getAllOrdersController);
 
 // order status  update
 router.put(
-  "/order-status/:orderId",
-  requireSignIn,
-  isAdmin,
-  orderStatusController
+  "/order-status/:orderId",requireSignIn,isAdmin,orderStatusController
 );
 //test routes
 router.get("/test", requireSignIn, isAdmin, testController);
