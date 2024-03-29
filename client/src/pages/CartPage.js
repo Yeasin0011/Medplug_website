@@ -70,7 +70,7 @@ const CartPage = () => {
       setLoading(false);
       localStorage.removeItem('cart');
       setCart([]);
-      navigate("/dashboard/user/order");
+      navigate("dashboard/user/orders");
       toast.success('Payment Completed Succesfully');
     } catch (error) {
       console.log(error);
