@@ -150,17 +150,50 @@ export const forgotPasswordController = async(req, res) =>{
 export const getOrdersController = async (req, res) => {
     try {
         const orders = await orderModel.find({buyer:req.user.__id}).populate('products', '-photo').populate("buyer","name")
-        res.json(orders);
+        res.json(orders); 
     } catch (error) {
         console.log(error)
         res.status(500).send({
             success: false,
-            message:'Error while getting orders'
+            message:'Error while getting orders',
+            error
+        })
+    }
+};
+
+//all orders
+export const getAllOrdersController = async (req, res) => {
+    try {
+        const orders = await orderModel.find
+        ({}).populate('products', '-photo').populate("buyer","name");
+        sort({createdAt: "-1"})
+        res.json(orders); 
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message:'Error while getting orders',
+            error
+        })
+    }
+};
+
+// order Status
+export const orderStatusController = async (req, res) =>{
+    try {
+        const { orderId } = req.params
+        const { status } = req.body
+        const orders = await orderModel.findByIdAndUpdate(orderId, {status}.{new:true});
+        res.json(orders); 
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message: 'Error while updateing order',
             error
         })
     }
 }
-
 // test controller
 export const testController = (req, res) => {
     try {
