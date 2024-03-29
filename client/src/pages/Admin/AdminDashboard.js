@@ -9,7 +9,7 @@ import { useAuth } from '../../context/auth'
 const AdminDashboard = () => {
     const [auth] = useAuth()
   return (
-    <Layout title={'Admin Dashboard'}>
+  <Layout title={'Admin Dashboard'}>
         <h1>Admin Analytics Dashboard</h1>
         <div className='container-fluid m-3 p-3'>
             <div className='row'>
@@ -25,7 +25,7 @@ const AdminDashboard = () => {
                 </div>
             </div>
         </div>
-    </Layout>
+  </Layout>
   )
 }
 
