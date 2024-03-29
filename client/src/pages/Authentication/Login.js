@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect,useState} from 'react';
 
 import Layout from '../../components/Layout/Layout';
 
@@ -10,6 +10,9 @@ import {useNavigate, useLocation} from 'react-router-dom';
 
 import { useAuth } from '../../context/auth';
 
+
+import app from '../../firebase/firebaseConfiq.js';
+import { GoogleAuthProvider, signInWithPopup, getAuth} from 'firebase/auth';
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -42,7 +45,34 @@ const handleSubmit = async (e)=>{
         toast.error('something went wrong')
     }
 }
+const handleGoogle = async (e) => {
+    e.preventDefault();
+    try {
+        const provider = new GoogleAuthProvider();
+        const auth = getAuth(app);
+        const result = await signInWithPopup(auth, provider);
+        
+        setAuth({
+            ...auth,
+            user: result.user,
+        });
+        localStorage.setItem('auth', JSON.stringify({ user: result.user }));
+        
+        toast.success('Logged in successfully with Google!');
+        navigate(location.state || "/");
+    } catch (error) {
+        console.error('Error during Google Sign-in:', error);
+        toast.error('Login failed. Please try again.');
+    }
+};
 
+useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('auth'))?.user;
+    if (user) {
+        setAuth({ ...auth, user });
+        
+    }
+}, []);
   return (
     <Layout title={"Login"}>
     <div className='register'>
@@ -61,6 +91,13 @@ const handleSubmit = async (e)=>{
             <button type="submit" className="btn btn-primary" onClick={() => {navigate('/forgot-password')}}>Forgot Password</button>
             </div>
             <button type="submit" className="btn btn-primary">Login</button>
+            </div>
+            <div className='pt-34 w-full flex'>
+                
+                <button onClick={handleGoogle} className='btn btn-success'>
+                    Login with Google 
+                </button>
+    
             </div>
         </form>
     </div>
