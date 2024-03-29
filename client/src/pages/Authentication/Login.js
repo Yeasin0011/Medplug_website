@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
-
+import React, {useEffect, useState} from 'react';
 import Layout from '../../components/Layout/Layout';
-
 import axios from "axios";
-
 import { toast } from "react-hot-toast";
-
 import {useNavigate, useLocation} from 'react-router-dom';
-
 import { useAuth } from '../../context/auth';
+import { GoogleAuthProvider, signInWithPopup, getAuth} from 'firebase/auth';
+import app from '../../firebase/FirebaseConfig';
+
+
+
+
 
 
 const Login = () => {
@@ -17,7 +18,6 @@ const Login = () => {
     const [auth, setAuth] = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-
 
 // Form function 
 const handleSubmit = async (e)=>{
@@ -43,7 +43,41 @@ const handleSubmit = async (e)=>{
     }
 }
 
-  return (
+
+// Google Authenticator
+
+
+const handleGoogle = async (e) => {
+    e.preventDefault();
+    try {
+        const provider = new GoogleAuthProvider();
+        const auth = getAuth(app);
+        const result = await signInWithPopup(auth, provider);
+        
+        // Update auth context and local storage with user data
+        setAuth({
+            ...auth,
+            user: result.user,
+        });
+        localStorage.setItem('auth', JSON.stringify({ user: result.user }));
+        
+        toast.success('Logged in successfully with Google!');
+        navigate(location.state || "/");
+    } catch (error) {
+        console.error('Error during Google Sign-in:', error);
+        toast.error('Login failed. Please try again.');
+    }
+};
+
+// Check for existing logged-in user (optional)
+useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('auth'))?.user;
+    if (user) {
+        setAuth({ ...auth, user });
+        // Optionally navigate to a different page for logged-in users
+    }
+}, []);
+return (
     <Layout title={"Login"}>
     <div className='register'>
         <h1>Login</h1>
@@ -58,9 +92,17 @@ const handleSubmit = async (e)=>{
                 <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" required/>
             </div>
             <div className='mb-3'>
-            <button type="submit" className="btn btn-primary" onClick={() => {navigate('/forgot-password')}}>Forgot Password</button>
-            </div>
             <button type="submit" className="btn btn-primary">Login</button>
+            </div>
+            <button type="submit" className="btn btn-primary" onClick={() => {navigate('/forgot-password')}}>Forgot Password</button>
+            <div/>
+            <div className='pt-34 w-full flex'>
+                
+                <button onClick={handleGoogle} className='btn btn-success'>
+                    Login with Google 
+                </button>
+    
+            </div>
             </div>
         </form>
     </div>

@@ -8,5 +8,5 @@
   },
   "devDependencies": {
     "@types/braintree": "^3.3.12"
-  }
-}
+    "express-formidable": "^1.2.0",
+    "firebase": "^10.9.0"
