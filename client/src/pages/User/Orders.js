@@ -1,10 +1,12 @@
-import React,{useState, useEffect} from "react";
-import Layout from '../../components/Layout/Layout'
-import UserMenu from '../../components/Layout/UserMenu'
-import axios from 'axios';
-import {useAuth} from  "../../context/auth";
-import moment from "moment";
+import React, { useState, useEffect } from "react";
 
+import Layout from '../../components/Layout/Layout'
+
+import UserMenu from '../../components/Layout/UserMenu'
+
+import axios from "axios";
+import { useAuth } from "../../context/auth";
+import moment from "moment";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -29,7 +31,7 @@ const Orders = () => {
             <UserMenu />
           </div>
           <div className="col-md-9">
-            <h1 className="text-center">Order History</h1>
+            <h1 className="text-center">All Orders</h1>
             {orders?.map((o, i) => {
               return (
                 <div className="border shadow">

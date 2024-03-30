@@ -28,7 +28,7 @@ const AdminMenu = () => {
             to="/dashboard/admin/orders"
             className="list-group-item list-group-item-action"
           >
-            Recieved Orders
+            Received orders.
           </NavLink>
           <NavLink
             to="/dashboard/admin/users"

@@ -50,6 +50,8 @@ import CartPage from "./pages/CartPage.js";
 
 import AdminOrders from "./pages/Admin/AdminOrders.js";
 
+import AdminOrders from "./pages/Admin/AdminOrders.js";
+
 
 
 

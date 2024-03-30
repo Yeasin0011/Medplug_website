@@ -1,7 +1,9 @@
 import { comparePassword, hashPassword, } from "../helper/authHelper.js";
 
 import  userModel  from "../models/userModel.js";
+
 import  orderModel  from "../models/orderModel.js";
+
 import JWT from "jsonwebtoken"; 
 
 
@@ -144,21 +146,12 @@ export const forgotPasswordController = async(req, res) =>{
     }
 }
 
-// test controller
-export const testController = (req, res) => {
-    try {
-      res.send("Protected Routes");
-    } catch (error) {
-      console.log(error);
-      res.send({ error });
-    }
-};
 
 
 //update profile 
 export const updateProfileController = async (req, res) => {
     try {
-        const{name,password,address,phone} = req.body
+        const{name,email,password,address,phone} = req.body
         const user = await userModel.findById(req.user._id)
         //password
         if (password && password.length < 6){
@@ -172,12 +165,12 @@ export const updateProfileController = async (req, res) => {
             address: address || user.address,
         },
         {new:true})
-res.status(200).send({
-    success: true,
-    message: 'Profile updated successfully',
-    updatedUser,
-});
-
+        res.status(200).send({
+            success: true,
+            message: 'Profile updated successfully',
+            updatedUser,
+        });
+        
         
     } catch (error) {
         console.log(error)
@@ -201,49 +194,53 @@ export const getOrdersController = async (req, res) => {
         console.log(error);
         res.status(500).send({
             success: false,
-            message: "Error WHile Geting Orders",
+            message: "Error While Geting Orders",
             error,
-      });
+        });
     }
-  };
+};
 
-  // Admin Order View 
-  export const getAllOrdersController = async (req, res) => {
+// Admin Order View
+export const getAllOrdersController = async (req, res) => {
     try {
-      const orders = await orderModel
-        .find({})
-        .populate("products", "-photo")
-        .populate("buyer", "name")
-        .sort({ createdAt: "-1" });
-      res.json(orders);
+        const orders = await orderModel
+          .find({})
+          .populate("products", "-photo")
+          .populate("buyer", "name")
+        res.json(orders);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error While Geting All Orders",
+            error,
+        });
+    }
+};
+
+// Order Status Controller
+export const orderStatusController = async (req, res) =>{
+    try {
+        const { orderId } = req.params
+        const { status } = req.body
+        const orders = await orderModel.findByIdAndUpdate(orderId, { status },{new:true});
+        res.json(orders);
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message: "Error while updating Order",
+            error
+        })
+    }
+}
+
+// test controller
+export const testController = (req, res) => {
+    try {
+      res.send("Protected Routes");
     } catch (error) {
       console.log(error);
-      res.status(500).send({
-        success: false,
-        message: "Error While Geting Orders",
-        error,
-      });
+      res.send({ error });
     }
-  };
-  
-  //order status
-  export const orderStatusController = async (req, res) => {
-    try {
-      const { orderId } = req.params;
-      const { status } = req.body;
-      const orders = await orderModel.findByIdAndUpdate(
-        orderId,
-        { status },
-        { new: true }
-      );
-      res.json(orders);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        success: false,
-        message: "Error While Updating Order",
-        error,
-      });
-    }
-  };
-  
+};
