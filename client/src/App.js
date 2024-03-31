@@ -1,4 +1,4 @@
- import {Routes, Route} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 
 import HomePage from "./pages/HomePage.js"
 
@@ -46,11 +46,9 @@ import Categories from "./pages/Categories.js";
 
 import CategoryProduct from "./pages/CategoryProduct.js";
 
-import CartPage from "./pages/CartPage.js";
+import CartPage from "./pages/CartPage";
 
 import AdminOrders from "./pages/Admin/AdminOrders.js";
-
-
 
 
 
