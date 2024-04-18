@@ -50,9 +50,9 @@ import CartPage from "./pages/CartPage";
 
 import AdminOrders from "./pages/Admin/AdminOrders.js";
 
+import AdminCouponManagement from "./pages/Admin/AdminCouponManagement.js";
 
-
-
+import CreateCouponForm from './components/CreateCouponForm';
 
 
 // import { ToastContainer } from "react-toastify"
@@ -80,6 +80,8 @@ function App() {
         <Route path="admin/products" element = {<Products/>}/>
         <Route path="admin/users" element = {<UsersView/>}/>
         <Route path="admin/orders" element = {<AdminOrders/>}/>
+        <Route path="/dashboard/admin/create-coupon" element={<CreateCouponForm />} />
+        <Route path="/dashboard/admin/manage-coupons" element={<AdminCouponManagement />} />
       </Route>
       <Route path="/register" element={<Register/>}/>
       <Route path="/forgot-password" element={<ForgotPassword/>}/>

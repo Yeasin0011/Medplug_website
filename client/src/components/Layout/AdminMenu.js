@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+
 const AdminMenu = () => {
   return (
     <>
@@ -35,6 +36,18 @@ const AdminMenu = () => {
             className="list-group-item list-group-item-action"
           >
             Users
+          </NavLink>
+          <NavLink
+            to="/dashboard/admin/create-coupon"
+            className="list-group-item list-group-item-action"
+          >
+            Create-Coupon
+          </NavLink>
+          <NavLink
+            to="/dashboard/admin/manage-coupons"
+            className="list-group-item list-group-item-action"
+          >
+            Manage-Coupons
           </NavLink>
         </div>
       </div>
