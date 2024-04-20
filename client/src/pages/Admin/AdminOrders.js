@@ -13,7 +13,7 @@ const AdminOrders = () => {
     "Not Process",
     "Processing",
     "Shipped",
-    "deliverd",
+    "delivered",
     "cancel",
   ]);
   const [changeStatus, setChangeStatus] = useState("");
@@ -43,6 +43,7 @@ const AdminOrders = () => {
       console.log(error);
     }
   };
+
   return (
     <Layout title={"All Orders Data"}>
       <div className="row dashboard">
