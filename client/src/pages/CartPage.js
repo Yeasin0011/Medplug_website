@@ -13,26 +13,71 @@ const CartPage = () => {
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [discountedTotal, setDiscountedTotal] = useState(0);
   const navigate = useNavigate();
-  
+
+// Function to calculate total price of items in the cart
+const totalPrice = () => {
+  try {
+    let total = 0;
+    cart?.forEach((item) => {
+      total += item.price;
+    });
+    return total.toLocaleString("en-US", {
+      style: "currency",
+      currency: "BDT",
+    });
+  } catch (error) {
+    console.log(error);
+    return 0;
+  }
+};
 
 
-  //total price
-  const totalPrice = () => {
-    try {
-      let total = 0;
-      cart?.map((item) => {
-        total = total + item.price;
-      });
-      return total.toLocaleString("en-US", {
-        style: "currency",
-        currency: "BDT",
-      });
-    } catch (error) {
-      console.log(error);
+// Function to handle applying coupon
+const handleApplyCoupon = async () => {
+  try {
+    console.log("Coupon code:", couponCode);
+    const response = await axios.post("/api/v1/coupon/validate", {
+      code: couponCode // Ensure that the coupon code is sent as "code"
+    });
+    const { valid, discount } = response.data;
+    if (valid) {
+      setDiscountedTotal(discount); // Update discountedTotal state with the discount amount
+      toast.success('Coupon applied successfully');
+    } else {
+      toast.error('Invalid coupon code. Please try again.');
     }
-  };
-  //detele item
+  } catch (error) {
+    console.error("Error applying coupon:", error);
+    console.error("Error message:", error.message); // Log the specific error message
+    toast.error('Failed to apply coupon. Please try again.');
+  }
+};
+
+
+// Function to calculate total price including discounts
+const totalPriceWithDiscount = () => {
+  const totalPriceNumber = parseFloat(totalPrice().replace(/[^\d.]/g, '')); // Convert total price string to number
+  const discountAmount = parseFloat(discountedTotal); // Discount amount
+  if (!isNaN(totalPriceNumber) && !isNaN(discountAmount)) {
+    const totalPriceAfterDiscount = totalPriceNumber - discountAmount; // Calculate total price after discount
+    const formattedPrice = totalPriceAfterDiscount.toLocaleString("en-US", {
+      style: "currency",
+      currency: "BDT",
+    });
+    return formattedPrice;
+  } else {
+    return totalPrice(); // Return original total price if conversion fails
+  }
+};
+
+
+
+
+
+  //delete item
   const removeCartItem = (pid) => {
     try {
       let myCart = [...cart];
@@ -48,30 +93,30 @@ const CartPage = () => {
   //get payment gateway token
   const getToken = async () => {
     try {
-      const {data} = await axios.get('/api/v1/product/braintree/token')
-      setClientToken(data?.clientToken)
+      const { data } = await axios.get("/api/v1/product/braintree/token");
+      setClientToken(data?.clientToken);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getToken()
+    getToken();
   }, [auth?.token]);
 
   //handle payments
   const handlePayment = async () => {
     try {
       setLoading(true);
-      const {nonce} = await instance.requestPaymentMethod()
-      const {data} = await axios.post('/api/v1/product/braintree/payment',{
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post("/api/v1/product/braintree/payment", {
         nonce,
         cart,
       });
       setLoading(false);
-      localStorage.removeItem('cart');
+      localStorage.removeItem("cart");
       setCart([]);
-      navigate("dashboard/user/orders");
-      toast.success('Payment Completed Succesfully');
+      navigate("/dashboard/user/orders");
+      toast.success("Payment Completed Succesfully");
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -125,7 +170,14 @@ const CartPage = () => {
             <h2>Cart Summary</h2>
             <p>Total | Checkout | Payment</p>
             <hr />
-            <h4>Total : {totalPrice()} </h4>
+            <h4>Total : {totalPriceWithDiscount()}</h4>
+            <input
+              type="text"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              placeholder="Enter coupon code"
+            />
+            <button onClick={handleApplyCoupon}>Apply Coupon</button>
             {auth?.user?.address ? (
               <>
                 <div className="mb-3">
@@ -167,21 +219,21 @@ const CartPage = () => {
                 ""
               ) : (
                 <>
-                  <DropIn 
+                  <DropIn
                     options={{
                       authorization: clientToken,
                       paypal: {
-                        flow: 'vault',
+                        flow: "vault",
                       },
                     }}
-                    onInstance={instance => setInstance(instance)}
+                    onInstance={(instance) => setInstance(instance)}
                   />
-                  <button 
+                  <button
                     className="btn btn-primary"
-                    onClick={handlePayment} 
-                    disabled={loading || !instance || !auth?.user?.address}
+                    onClick={handlePayment}
+                    disabled={!instance || !auth?.user?.address}
                   >
-                    { loading ? "Processing...." : "Make Payment"}
+                    {loading ? "Processing...." : "Make Payment"}
                   </button>
                 </>
               )}
